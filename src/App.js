@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './Home';
-import Decide from './Decide';
-import './App.css';
+import React, { Component } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Home from './pages/Home'
+import Decide from './pages/Decide'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import './App.css'
 
 class App extends Component {
   render() {
@@ -11,6 +13,8 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/decide" component={Decide}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/signup" component={Signup}/>
             <Route path="/" component={Home}/>
           </Switch>
         </div>
