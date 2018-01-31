@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import StarRatingComponent from 'react-star-rating-component';
 import '../App.css';
 
 export default class Form extends Component {
@@ -7,7 +8,9 @@ export default class Form extends Component {
     super(props)
 
     this.state = {
-      selectedOption: ''
+      selectedOption: '',
+      rating: 3,
+      price: 2
     }
   }
 
@@ -23,11 +26,23 @@ export default class Form extends Component {
     console.log('You have selected: ', this.state.selectedOption);
   }
 
+  onStarClick(nextValue, prevValue, name) {
+      this.setState({rating: nextValue});
+  }
+
+  onMoneyClick(nextValue, prevValue, name) {
+      this.setState({price: nextValue});
+  }
+
   render() {
     console.log("Option selected: ", this.state.selectedOption);
+    console.log("Rating selected: ", this.state.rating);
+    console.log("Price selected: ", this.state.price);
+    const { rating, price } = this.state;
     return (
       <div>
         <form onSubmit={this.handleFormSubmit}>
+
           <div className="location">
             <div className="radio">
               <label>
@@ -40,8 +55,8 @@ export default class Form extends Component {
             </div>
             <div className="radio">
               <label>
-                <input type="radio" value="bar"
-                  checked={this.state.selectedOption === 'bar'}
+                <input type="radio" value="drinks"
+                  checked={this.state.selectedOption === 'drinks'}
                   onChange={this.handleOptionChange.bind(this)}
                 />
                 Drinks
@@ -57,6 +72,7 @@ export default class Form extends Component {
               </label>
             </div>
           </div>
+
           <div className="distance">
             <div className="radio">
               <label>
@@ -86,64 +102,34 @@ export default class Form extends Component {
               </label>
             </div>
           </div>
-          <div className="Rating">
+
+          <div className="rating">
             <div className="radio">
               <label>
-                <input type="radio" value="***"
-                  checked={this.state.selectedOption === '***'}
-                  onChange={this.handleOptionChange.bind(this)}
+                <StarRatingComponent
+                  name="rate1"
+                  starCount={5}
+                  value={rating}
+                  onStarClick={this.onStarClick.bind(this)}
                 />
-                ***
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input type="radio" value="****"
-                  checked={this.state.selectedOption === '****'}
-                  onChange={this.handleOptionChange.bind(this)}
-                />
-                ****
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input type="radio" value="*****"
-                  checked={this.state.selectedOption === '*****'}
-                  onChange={this.handleOptionChange.bind(this)}
-                />
-                *****
               </label>
             </div>
           </div>
+
           <div className="price">
             <div className="radio">
               <label>
-                <input type="radio" value="$"
-                  checked={this.state.selectedOption === '$'}
-                  onChange={this.handleOptionChange.bind(this)}
+                <StarRatingComponent
+                    name="rate2"
+                    starCount={4}
+                    value={price}
+                    renderStarIcon={() => <span>$</span>}
+                    onStarClick={this.onMoneyClick.bind(this)}
                 />
-                $
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input type="radio" value="$$"
-                  checked={this.state.selectedOption === '$$'}
-                  onChange={this.handleOptionChange.bind(this)}
-                />
-                $$
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input type="radio" value="$$$"
-                  checked={this.state.selectedOption === '$$$'}
-                  onChange={this.handleOptionChange.bind(this)}
-                />
-                $$$
               </label>
             </div>
           </div>
+
           <button className="btn btn-default" type="submit">Save</button>
         </form>
       </div>
