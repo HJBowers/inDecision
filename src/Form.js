@@ -22,12 +22,24 @@ export default class Form extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
+          <label>
+            Eat:
+            <input type="radio" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <label>
+            Drink:
+            <input type="radio" value={this.state.value} onChange={this.handleChange} />
+          </label>
         <input type="submit" value="Submit" />
+
       </form>
     );
   }
 }
+
+{/* <label>
+  Name:
+  <input type="radio" value={this.state.value} onChange={this.handleChange} >
+    <img src="http://placehold.it/60x60/009900/fff&text=$"></img>
+  </input>
+</label> */}
