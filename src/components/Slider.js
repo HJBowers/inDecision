@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Slider from 'react-rangeslider'
-import 'react-rangeslider/lib/index.css'
+import '../App.css';
+
 
 export default class DistanceSlider extends Component {
   constructor(props, context) {
