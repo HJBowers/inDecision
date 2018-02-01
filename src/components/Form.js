@@ -34,47 +34,63 @@ export default class Form extends Component {
       this.setState({price: nextValue});
   }
 
+
+  onButtonClick() {
+    var count = 1;
+    function setColor(btn, color) {
+      var property = document.getElementById(btn);
+      if (count == 0) {
+        property.style.backgroundColor = "#FFFFFF"
+        count = 1;
+      }
+      else {
+        property.style.backgroundColor = "#7FFF00"
+        count = 0;
+      }
+    }
+  }
+
   render() {
     console.log("Option selected: ", this.state.selectedOption);
     console.log("Rating selected: ", this.state.rating);
     console.log("Price selected: ", this.state.price);
     const { rating, price } = this.state;
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
+      <div >
+        <form onSubmit={this.handleFormSubmit} >
 
-          <div className="location">
-            <div className="radio">
-              <label>
+            <div className="location uk-button-group">
+              <label className="uk-padding-small">
                 <input type="radio" value="food"
                   checked={this.state.selectedOption === 'food'}
                   onChange={this.handleOptionChange.bind(this)}
+                  hidden
                 />
-                Food
+                <a className="button uk-button uk-button-secondary" >Food</a>
               </label>
-            </div>
-            <div className="radio">
-              <label>
+
+              <label className="uk-padding-small">
                 <input type="radio" value="drinks"
                   checked={this.state.selectedOption === 'drinks'}
                   onChange={this.handleOptionChange.bind(this)}
+                  hidden
                 />
-                Drinks
+                <a className="button uk-button uk-button-secondary" >Drink</a>
               </label>
-            </div>
-            <div className="radio">
-              <label>
+
+              <label className="uk-padding-small">
                 <input type="radio" value="food-drink"
                   checked={this.state.selectedOption === 'food-drink'}
                   onChange={this.handleOptionChange.bind(this)}
+                  hidden
                 />
-                Food & Drinks
+                <a className="button uk-button uk-button-secondary" >Food & Drink</a>
               </label>
             </div>
-          </div>
 
-          <div className="distance">
-            <div className="radio">
+
+          <div className="distance uk-card-small uk-card uk-card-body uk-card-primary">
+
               <label>
                 <input type="radio" value="1mi"
                   checked={this.state.selectedOption === '1mi'}
@@ -82,8 +98,7 @@ export default class Form extends Component {
                 />
                 1mi
               </label>
-            </div>
-            <div className="radio">
+
               <label>
                 <input type="radio" value="3mi"
                   checked={this.state.selectedOption === '3mi'}
@@ -91,8 +106,7 @@ export default class Form extends Component {
                 />
                 3mi
               </label>
-            </div>
-            <div className="radio">
+
               <label>
                 <input type="radio" value="5mi"
                   checked={this.state.selectedOption === '5mi'}
@@ -100,11 +114,10 @@ export default class Form extends Component {
                 />
                 5mi
               </label>
-            </div>
           </div>
 
-          <div className="rating">
-            <div className="radio">
+          <div className="rating uk-card-small uk-card uk-card-body uk-card-primary">
+
               <label>
                 <StarRatingComponent
                   name="rate1"
@@ -113,11 +126,10 @@ export default class Form extends Component {
                   onStarClick={this.onStarClick.bind(this)}
                 />
               </label>
-            </div>
           </div>
 
-          <div className="price">
-            <div className="radio">
+          <div className="price uk-card-small uk-card uk-card-body uk-card-primary">
+
               <label>
                 <StarRatingComponent
                     name="rate2"
@@ -127,7 +139,6 @@ export default class Form extends Component {
                     onStarClick={this.onMoneyClick.bind(this)}
                 />
               </label>
-            </div>
           </div>
 
           <button className="btn btn-default" type="submit">Save</button>

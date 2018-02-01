@@ -26,3 +26,17 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.dogs {
+  border: 10px solid red;
+}
+
+.button {
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.2s;
+}
+
+.button:hover {
+    background-color: pink; /* Green */
+    color: white;
+}
