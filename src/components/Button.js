@@ -6,18 +6,18 @@ export default class Button extends Component {
     super(props)
 
     this.state = {
-      bgColor: 'grey'
+      bgColor: '#222'
     }
   }
 
   handleClick() {
-    if(this.state.bgColor === 'grey') {
+    if(this.state.bgColor === '#222') {
       this.setState({
-        bgColor: 'pink'
+        bgColor: '#FF95C7'
       })
       } else {
          this.setState({
-        bgColor: 'grey'
+        bgColor: '#222'
       })
     }
   }
