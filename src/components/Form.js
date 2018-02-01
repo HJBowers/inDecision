@@ -34,27 +34,21 @@ export default class Form extends Component {
       this.setState({price: nextValue});
   }
 
-
-  onButtonClick() {
-    var count = 1;
-    function setColor(btn, color) {
-      var property = document.getElementById(btn);
-      if (count == 0) {
-        property.style.backgroundColor = "#FFFFFF"
-        count = 1;
-      }
-      else {
-        property.style.backgroundColor = "#7FFF00"
-        count = 0;
-      }
-    }
-  }
-
   render() {
-    console.log("Option selected: ", this.state.selectedOption);
-    console.log("Rating selected: ", this.state.rating);
-    console.log("Price selected: ", this.state.price);
     const { rating, price } = this.state;
+
+    let food, drinks, foodDrinks = ''
+
+    if (this.state.selectedOption === 'food') {
+      food = 'selected-food'
+    }
+    if (this.state.selectedOption === 'drinks') {
+      drinks = 'selected-drinks'
+    }
+    if (this.state.selectedOption === 'foodDrinks') {
+      foodDrinks = 'selected-foodDrinks'
+    }
+
     return (
       <div >
         <form onSubmit={this.handleFormSubmit} >
@@ -66,7 +60,7 @@ export default class Form extends Component {
                   onChange={this.handleOptionChange.bind(this)}
                   hidden
                 />
-                <a className="button uk-button uk-button-secondary" >Food</a>
+                <a className={ `button uk-button uk-button-secondary + ${food}` } >Food</a>
               </label>
 
               <label className="uk-padding-small">
@@ -75,16 +69,16 @@ export default class Form extends Component {
                   onChange={this.handleOptionChange.bind(this)}
                   hidden
                 />
-                <a className="button uk-button uk-button-secondary" >Drink</a>
+                <a className={ `button uk-button uk-button-secondary + ${drinks}` } >Drink</a>
               </label>
 
               <label className="uk-padding-small">
-                <input type="radio" value="food-drink"
-                  checked={this.state.selectedOption === 'food-drink'}
+                <input type="radio" value="foodDrinks"
+                  checked={this.state.selectedOption === 'foodDrinks'}
                   onChange={this.handleOptionChange.bind(this)}
                   hidden
                 />
-                <a className="button uk-button uk-button-secondary" >Food & Drink</a>
+                <a className={ `button uk-button uk-button-secondary + ${foodDrinks}` } >Food & Drink</a>
               </label>
             </div>
 

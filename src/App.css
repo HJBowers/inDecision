@@ -40,3 +40,15 @@
     background-color: pink; /* Green */
     color: white;
 }
+
+.selected-food {
+  background-color: pink;
+}
+
+.selected-drinks {
+  background-color: pink;
+}
+
+.selected-foodDrinks {
+  background-color: pink;
+}
