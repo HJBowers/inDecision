@@ -41,14 +41,14 @@
     color: white;
 }
 
-.selected-food {
+.food {
   background-color: pink;
 }
 
-.selected-drinks {
+.drinks {
   background-color: pink;
 }
 
-.selected-foodDrinks {
+.foodDrinks {
   background-color: pink;
 }

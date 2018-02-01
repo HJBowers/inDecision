@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../components/Button'
 import StarRatingComponent from 'react-star-rating-component';
 import '../App.css';
 
@@ -8,22 +9,31 @@ export default class Form extends Component {
     super(props)
 
     this.state = {
-      selectedOption: '',
+      food: false,
+      drinks: false,
       rating: 3,
-      price: 2
+      price: 2,
+      distance: ''
     }
   }
 
-  handleOptionChange(changeEvent) {
+  handleOptionChange(event) {
+    // this.setState({
+    //   selectedOption: changeEvent.target.value
+    // });
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
     this.setState({
-      selectedOption: changeEvent.target.value
-    });
+      [name]: value
+    })
   }
 
   handleFormSubmit(formSubmitEvent) {
     formSubmitEvent.preventDefault();
 
-    console.log('You have selected: ', this.state.selectedOption);
+    // console.log('You have selected: ', this.state.selectedOption);
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -35,82 +45,68 @@ export default class Form extends Component {
   }
 
   render() {
-    const { rating, price } = this.state;
-
-    let food, drinks, foodDrinks = ''
-
-    if (this.state.selectedOption === 'food') {
-      food = 'selected-food'
-    }
-    if (this.state.selectedOption === 'drinks') {
-      drinks = 'selected-drinks'
-    }
-    if (this.state.selectedOption === 'foodDrinks') {
-      foodDrinks = 'selected-foodDrinks'
-    }
+    console.log("Food Checked: ", this.state.food)
+    console.log("Drinks Checked: ", this.state.drinks)
+    const { selectedOption, rating, price } = this.state;
 
     return (
       <div >
         <form onSubmit={this.handleFormSubmit} >
-
-            <div className="location uk-button-group">
-              <label className="uk-padding-small">
-                <input type="radio" value="food"
-                  checked={this.state.selectedOption === 'food'}
+            <div className="uk-padding-small uk-button-group">
+              <label className="uk-padding-remove-vertical uk-margin-left uk-margin-right">
+                <input
+                  type="checkbox"
+                  name="food"
+                  checked={this.state.food}
                   onChange={this.handleOptionChange.bind(this)}
                   hidden
                 />
-                <a className={ `button uk-button uk-button-secondary + ${food}` } >Food</a>
+                <Button label="Food"/>
               </label>
-
-              <label className="uk-padding-small">
-                <input type="radio" value="drinks"
-                  checked={this.state.selectedOption === 'drinks'}
+              <label className="uk-padding-remove-vertical uk-margin-left uk-margin-right">
+                <input
+                  type="checkbox"
+                  name="drinks"
+                  checked={this.state.drinks}
                   onChange={this.handleOptionChange.bind(this)}
                   hidden
                 />
-                <a className={ `button uk-button uk-button-secondary + ${drinks}` } >Drink</a>
-              </label>
-
-              <label className="uk-padding-small">
-                <input type="radio" value="foodDrinks"
-                  checked={this.state.selectedOption === 'foodDrinks'}
-                  onChange={this.handleOptionChange.bind(this)}
-                  hidden
-                />
-                <a className={ `button uk-button uk-button-secondary + ${foodDrinks}` } >Food & Drink</a>
+                <Button label="Drinks"/>
               </label>
             </div>
 
 
-          <div className="distance uk-card-small uk-card uk-card-body uk-card-primary">
+          <div className="distance uk-flex uk-flex-center">
 
-              <label>
+              <label className="uk-card uk-card-default uk-card-body">
                 <input type="radio" value="1mi"
                   checked={this.state.selectedOption === '1mi'}
                   onChange={this.handleOptionChange.bind(this)}
+                  hidden
                 />
                 1mi
               </label>
 
-              <label>
+              <label className="uk-card uk-card-default uk-card-body">
                 <input type="radio" value="3mi"
                   checked={this.state.selectedOption === '3mi'}
                   onChange={this.handleOptionChange.bind(this)}
+                  hidden
                 />
                 3mi
               </label>
 
-              <label>
+              <label className="uk-card uk-card-default uk-card-body">
                 <input type="radio" value="5mi"
                   checked={this.state.selectedOption === '5mi'}
                   onChange={this.handleOptionChange.bind(this)}
+                  hidden
                 />
                 5mi
               </label>
           </div>
 
-          <div className="rating uk-card-small uk-card uk-card-body uk-card-primary">
+          <div className="rating ">
 
               <label>
                 <StarRatingComponent
@@ -122,7 +118,7 @@ export default class Form extends Component {
               </label>
           </div>
 
-          <div className="price uk-card-small uk-card uk-card-body uk-card-primary">
+          <div className="price ">
 
               <label>
                 <StarRatingComponent
