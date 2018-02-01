@@ -86,6 +86,8 @@ export default class Form extends Component {
               <label>
                 <StarRatingComponent
                   name="rate1"
+                  starColor='#FF95C7'
+                  emptyStarColor='#666'
                   starCount={5}
                   value={rating}
                   onStarClick={this.onStarClick.bind(this)}
@@ -98,6 +100,8 @@ export default class Form extends Component {
                 <StarRatingComponent
                     name="rate2"
                     starCount={4}
+                    starColor= '#FF95C7'
+                    emptyStarColor='#666'
                     value={price}
                     renderStarIcon={() => <span>$</span>}
                     onStarClick={this.onMoneyClick.bind(this)}
