@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button'
 import StarRatingComponent from 'react-star-rating-component';
-import DistanceSlider from '../components/Slider'
+import Slider from 'react-rangeslider'
 import '../App.css';
 
 export default class Form extends Component {
@@ -33,8 +33,12 @@ export default class Form extends Component {
 
   handleFormSubmit(formSubmitEvent) {
     formSubmitEvent.preventDefault();
+  }
 
-    // console.log('You have selected: ', this.state.selectedOption);
+  handleSliderChange = (value) => {
+    this.setState({
+      distance: value
+    })
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -46,9 +50,8 @@ export default class Form extends Component {
   }
 
   render() {
-    console.log("Food Checked: ", this.state.food)
-    console.log("Drinks Checked: ", this.state.drinks)
-    const { selectedOption, rating, price } = this.state;
+    console.log("State====>", this.state)
+    const { selectedOption, rating, price, distance } = this.state;
 
     return (
       <div >
@@ -79,7 +82,16 @@ export default class Form extends Component {
         <div className="uk-container">
 
           <div className="uk-margin-large-bottom uk-margin-top slider">
-            <DistanceSlider />
+            <Slider
+              min={0}
+              max={10}
+              step={1}
+              value={distance}
+              orientation={"horizontal"}
+              tooltip={true}
+              labels={{1: '1 mile', 9: '10 miles'}}
+              onChange={this.handleSliderChange}
+            />
           </div>
 
           <div className=" uk-margin-large-top">
