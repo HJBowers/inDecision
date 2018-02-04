@@ -79,7 +79,7 @@ export default class Form extends Component {
                 orientation={"horizontal"}
                 tooltip={true}
                 labels={{1: '1 mile', 9: '10 miles'}}
-                onChange={this.handleSliderChange}
+                onChange={this.handleSliderChange.bind(this)}
               />
             </div>
             <div className=" uk-margin-large-top">
