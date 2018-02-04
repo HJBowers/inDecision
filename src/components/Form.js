@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Button from '../components/Button'
-import StarRatingComponent from 'react-star-rating-component';
+import StarRatingComponent from 'react-star-rating-component'
 import Slider from 'react-rangeslider'
-import '../App.css';
+import '../App.css'
 
 export default class Form extends Component {
-
   constructor(props, context) {
     super(props, context)
 
@@ -19,39 +18,31 @@ export default class Form extends Component {
   }
 
   handleOptionChange(event) {
-    // this.setState({
-    //   selectedOption: changeEvent.target.value
-    // });
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const target = event.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
 
-    this.setState({
-      [name]: value
-    })
+    this.setState({[name]: value})
   }
 
-  handleFormSubmit(formSubmitEvent) {
-    formSubmitEvent.preventDefault();
+  handleFormSubmit(event) {
+    event.preventDefault()
   }
 
-  handleSliderChange = (value) => {
-    this.setState({
-      distance: value
-    })
+  handleSliderChange(value) {
+    this.setState({distance: value})
   }
 
-  onStarClick(nextValue, prevValue, name) {
-      this.setState({rating: nextValue});
+  onStarClick(value) {
+    this.setState({rating: value})
   }
 
-  onMoneyClick(nextValue, prevValue, name) {
-      this.setState({price: nextValue});
+  onMoneyClick(value) {
+    this.setState({price: value})
   }
 
   render() {
-    console.log("State====>", this.state)
-    const { selectedOption, rating, price, distance } = this.state;
+    const { selectedOption, rating, price, distance } = this.state
 
     return (
       <div >
@@ -78,23 +69,20 @@ export default class Form extends Component {
               <Button label="Drinks"/>
             </label>
           </div>
-
-        <div className="uk-container">
-
-          <div className="uk-margin-large-bottom uk-margin-top slider">
-            <Slider
-              min={0}
-              max={10}
-              step={1}
-              value={distance}
-              orientation={"horizontal"}
-              tooltip={true}
-              labels={{1: '1 mile', 9: '10 miles'}}
-              onChange={this.handleSliderChange}
-            />
-          </div>
-
-          <div className=" uk-margin-large-top">
+          <div className="uk-container">
+            <div className="uk-margin-large-bottom uk-margin-top slider">
+              <Slider
+                min={0}
+                max={10}
+                step={1}
+                value={distance}
+                orientation={"horizontal"}
+                tooltip={true}
+                labels={{1: '1 mile', 9: '10 miles'}}
+                onChange={this.handleSliderChange}
+              />
+            </div>
+            <div className=" uk-margin-large-top">
               <label>
                 <StarRatingComponent
                   name="rate1"
@@ -105,57 +93,24 @@ export default class Form extends Component {
                   onStarClick={this.onStarClick.bind(this)}
                 />
               </label>
-          </div>
-
-          <div className="uk-margin-bottom uk-margin-top">
+            </div>
+            <div className="uk-margin-bottom uk-margin-top">
               <label>
                 <StarRatingComponent
-                    name="rate2"
-                    starCount={4}
-                    starColor= '#FF95C7'
-                    emptyStarColor='#666'
-                    value={price}
-                    renderStarIcon={() => <span>$</span>}
-                    onStarClick={this.onMoneyClick.bind(this)}
+                  name="rate2"
+                  starCount={4}
+                  starColor= '#FF95C7'
+                  emptyStarColor='#666'
+                  value={price}
+                  renderStarIcon={() => <span>$</span>}
+                  onStarClick={this.onMoneyClick.bind(this)}
                 />
               </label>
+            </div>
           </div>
-
-        </div>
           <button className="uk-margin-large-bottom button uk-button uk-button-secondary" type="submit">Call a Lyft!</button>
         </form>
       </div>
     )
   }
 }
-
-
-{/* <div className="distance uk-flex uk-flex-center">
-
-    <label className="uk-card uk-card-default uk-card-body">
-      <input type="radio" value="1mi"
-        checked={this.state.selectedOption === '1mi'}
-        onChange={this.handleOptionChange.bind(this)}
-        hidden
-      />
-      1mi
-    </label>
-
-    <label className="uk-card uk-card-default uk-card-body">
-      <input type="radio" value="3mi"
-        checked={this.state.selectedOption === '3mi'}
-        onChange={this.handleOptionChange.bind(this)}
-        hidden
-      />
-      3mi
-    </label>
-
-    <label className="uk-card uk-card-default uk-card-body">
-      <input type="radio" value="5mi"
-        checked={this.state.selectedOption === '5mi'}
-        onChange={this.handleOptionChange.bind(this)}
-        hidden
-      />
-      5mi
-    </label>
-</div> */}
