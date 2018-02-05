@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-lyft": "^1.0.3",
+    "passport": "^0.4.0",
+    "passport-lyft": "^0.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-radioimg": "^1.1.0",
