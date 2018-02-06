@@ -1,4 +1,5 @@
 const passport = require('passport')
+require('dotenv').config()
 const lyftStrategy = require('passport-lyft').Strategy
 const client_id = process.env.CONFIG_LYFT_CLIENT_ID || null
 const client_secret = process.env.CONFIG_LYFT_CLIENT_SECRET || null
@@ -20,5 +21,6 @@ passport.use(new lyftStrategy(
     return done(null, user)
   }
 ))
+
 
 module.exports = passport

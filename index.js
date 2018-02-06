@@ -1,13 +1,13 @@
-import express from 'express'
-import cookieParser from 'cookie-parser'
-import bodyParser from 'body-parser'
-import passport from './src/client/util/lyft-node-oauth'
-import session from 'express-session'
-import path from 'path'
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const passport = require('./lyft-passport')
+const session = require('express-session')
+const path = require('path')
 
 const app = express()
 
-app.use(express.static(__dirname + '/build'))
+app.use(express.static(__dirname + '/client/build'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -15,7 +15,7 @@ app.use(session(
   {
     secret: 'nom nom nom',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
     cookie: { maxAge: 1 * 24 * 60 * 60 * 1000 }
   }
 ))
@@ -35,7 +35,7 @@ app.get('/callback', passport.authenticate('lyft', { failureRedirect: '/login' }
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/build/index.html'))
+  res.sendFile(path.join(__dirname+'/client/build/index.html'))
 })
 
 const port = process.env.PORT || 5000

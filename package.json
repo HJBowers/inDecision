@@ -1,27 +1,31 @@
 {
-  "name": "indecision",
-  "version": "0.1.0",
-  "private": true,
+  "name": "inDecision",
+  "version": "1.0.0",
+  "description": "An app that calls a Lyft to take you to a randomly selected restaurant or bar.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HJBowers/inDecision.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HJBowers/inDecision/issues"
+  },
+  "homepage": "https://github.com/HJBowers/inDecision#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "node-lyft": "^1.0.3",
     "passport": "^0.4.0",
-    "passport-lyft": "^0.1.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-radioimg": "^1.1.0",
-    "react-rangeslider": "^2.2.0",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-star-rating-component": "^1.3.0",
-    "uikit": "^3.0.0-beta.38"
-  },
-  "devDependencies": {
-    "react-scripts": "1.1.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "passport-lyft": "^0.1.2"
   }
 }
