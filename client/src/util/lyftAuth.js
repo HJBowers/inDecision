@@ -1,22 +1,22 @@
-const headers = new Headers()
-const client_id = process.env.CONFIG_LYFT_CLIENT_ID || null
-const stateString = "random"
+const client_id = process.env.CONFIG_LYFT_CLIENT_ID || '_c1acZZEx7zF'
+const stateString = ""
 
-function accessLyftAccount() {
+export function accessLyftAccount() {
   const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
 
   const myInit = {
     method: 'GET',
-    headers: headers,
-    credentials: 'include'
-    mode: 'cors',
-    cache: 'default'
+    credentials: 'include',
+    mode: 'no-cors',
+    cache: 'default',
+    redirect: 'follow'
   }
 
-  fetch(url, myInit)
-  .then(response => response.json())
+  return fetch(url, myInit)
+  .then(response => {console.log('accessLyftAccount resp::', response); return response})
   .then( responseObj => {
     console.log(responseObj)
+    return responseObj
   })
   .catch(err => console.error(err))
 }
@@ -30,10 +30,10 @@ function useAccessToken() {
 }
 
 
-function getLyftToken() {
+export function getLyftToken() {
   accessLyftAccount
   retrieveAccessToken
   useAccessToken
 }
 
-export default getLyftToken;
+// export default getLyftToken;

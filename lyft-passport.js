@@ -9,7 +9,7 @@ passport.use(new lyftStrategy(
   {
     clientID: client_id,
     clientSecret: client_secret,
-    callbackURL: 'http://localhost:3000/callback',
+    callbackURL: 'http://localhost:3001/callback',
     state: true
   },
 
