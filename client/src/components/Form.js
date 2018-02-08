@@ -42,7 +42,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const { selectedOption, rating, price, distance } = this.state
+    const { rating, price, distance } = this.state
 
     return (
       <div >

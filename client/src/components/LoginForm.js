@@ -22,30 +22,7 @@ export default class LoginForm extends Component {
 
   handleFormSubmit(event) {
     event.preventDefault()
-    // var myHeaders = new Headers()
-    // var myInit = {
-    //   method: 'GET',
-    //   headers: myHeaders,
-    //   mode: 'no-cors',
-    //   credentials: 'include'
-    // }
-    //
-    // fetch('/auth/lyft', myInit)
-    // .then(res => {
-    //   console.log("WTF ??????   ", res)
-    //   return res.json()
-    // })
-    // .then((passwordValue, emailValue) => {
-    //   console.log("password === ", passwordValue, "\nemail ==== ", emailValue)
-    //   this.setState( {passwordValue, emailValue} )
-    // })
-    // .catch(console.error)
-
     accessLyftAccount()
-    .then(resp => {
-      console.log('accessLyftAccount:: ', resp)
-    })
-
   }
 
   render() {
