@@ -4,53 +4,57 @@ const client_secret = process.env.CONFIG_LYFT_CLIENT_SECRET || 'OudKwZhqGGCCTkc5
 const stateString = "true"
 
 export function accessLyftAccount() {
-  const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
+  let url = `https://api.lyft.com/oauth/authorize?${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
+  const myHeaders = new Headers({
+    "Access-Control-Allow-Origin": "*"
+  })
 
   const myInit = {
     method: 'GET',
-    credentials: 'include',
-    mode: 'no-cors',
+    mode: 'cors',
     cache: 'default',
-    redirect: 'follow'
+    headers: myHeaders,
+    // credentials: 'include',
+    // redirect: 'follow'
   }
 
   return fetch(url, myInit)
-  .then(response => {console.log('accessLyftAccount resp::', response); return response})
-  .then( responseObj => {
-    console.log(responseObj)
-    return responseObj
+  .then(response => {
+    return response
   })
   .catch(err => console.error(err))
 }
 
+
+
+
 export function retrieveAccessToken() {
   const url = 'https://api.lyft.com/oauth/token'
-  let authCode = window.location.search
-  authCode = authCode.replace("?code=", '')
+  // const url = `https://api.lyft.com/oauth/token?client_id=${}&client_secret=CLIENT_SECRET&grant_type=authorization_code&code=AUTHORIZATION_CODE&redirect_uri=CALLBACK_URL`
+  let accessToken = window.location.search
+  accessToken = accessToken.replace("?code=", '')
+  const authStateArr = accessToken.split("&state=")
+  const authCode = authStateArr[0]
+  const state = authStateArr[1]
 
-  console.log("auth code from Lyft: ", authCode)
+  console.log("auth:", authCode, "\nstate:", state)
 
   const myInit = {
     method: "POST",
-    // credentials: "same-origin",
+    state: `${state}`,
     body: JSON.stringify({
       "grant_type": "authorization_code",
       "code": `${authCode}`
     }),
     headers: {
       "Authorization": "Basic "+window.btoa(`${client_id}:${client_secret}`),
-       // "Authorization": "Basic "+base64(client_id+":"+client_secret),
-      // "Authorization": "Basic "+window.btoa('_c1acZZEx7zF:OudKwZhqGGCCTkc5IRTiDvwqUxkmef_0'),
-      // "Authorization": "Basic "+btoa+`(${client_id}:${client_secret})`,
-      // "Authorization": "Basic "+base64(`${client_id}:${client_secret}`+`)`,
-      // "Authorization": "Basic "+encodeBase64(client_id+":"+client_secret),
-      // "Authorization": `Basic base64(${client_id}:${client_secret})`,
-      "Content-Type": "application/json"
+      "Content-Type": "application/json;charset=UTF-8"
     }
   }
 
   return fetch(url, myInit)
-  .then(response => {console.log('retrieveAccessToken response::', response); return response})
+  .then(response => response.json())
+  .then(response => console.log(response))
   .catch(err => console.error(err))
 }
 

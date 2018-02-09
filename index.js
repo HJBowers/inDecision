@@ -4,11 +4,13 @@ const bodyParser = require('body-parser')
 const passport = require('./lyft-passport')
 const session = require('express-session')
 const path = require('path')
+const cors = require('cors')
 
 const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cors())
 app.use(cookieParser())
 app.use(session(
   {
@@ -28,6 +30,7 @@ app.get('/auth/lyft',
 
 app.get('/callback', passport.authenticate('lyft', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log("**************** failureRedirect!!!! ****************")
     res.redirect('/')
 })
 

@@ -7,9 +7,9 @@ import '../App.css'
 
 class Home extends Component {
 
-// componentDidMount(){
-//   retrieveAccessToken()
-// }
+componentDidMount(){
+  retrieveAccessToken()
+}
 
   render() {
     return (
