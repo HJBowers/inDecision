@@ -19,7 +19,6 @@ componentDidMount(){
           <h1 className="App-title">What would you like to do?</h1>
         </header>
         <div className="uk-container" >
-          <a className="button uk-button uk-button-secondary" href="http://localhost:3001/auth/lyft">Log in!</a>
           <Form />
         </div>
       </div>

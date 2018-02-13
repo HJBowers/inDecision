@@ -23,9 +23,10 @@ app.use(session(
 app.use(passport.initialize())
 app.use(passport.session())
 
+
 // Lyft-node-oauth
 app.get('/auth/lyft',
-  passport.authenticate('lyft', { scope: ['public','profile'] }
+  passport.authenticate('lyft', { scope: ['public', 'profile', 'rides.read'] }
 ))
 
 app.get('/callback', passport.authenticate('lyft', { failureRedirect: '/login' }),
