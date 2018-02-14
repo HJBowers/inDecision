@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Button from '../components/Button'
 import StarRatingComponent from 'react-star-rating-component'
 import Slider from 'react-rangeslider'
+import Button from '../components/Button'
+// import {geoFindMe} from '../util/geolocation'
 import '../App.css'
 
 export default class Form extends Component {
@@ -9,6 +10,8 @@ export default class Form extends Component {
     super(props, context)
 
     this.state = {
+      latitude: "",
+      longitude: "",
       food: false,
       drinks: false,
       rating: 3,
@@ -16,6 +19,33 @@ export default class Form extends Component {
       distance: 0
     }
   }
+
+
+  componentDidMount(){
+    this.geoFindMe()
+  }
+
+  geoFindMe() {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser. Use Chrome, silly")
+    }
+
+    const success = (position) => {
+      const latitude  = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log( "Coordinates: ", latitude, longitude )
+
+      this.setState({latitude, longitude})
+      console.log( "Coordinates state: ", this.state.latitude, this.state.longitude )
+    }
+
+    const error = () => {
+      console.log( "Error!" )
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error)
+  }
+
 
   handleOptionChange(event) {
     const target = event.target
@@ -43,6 +73,7 @@ export default class Form extends Component {
 
   render() {
     const { rating, price, distance } = this.state
+    console.log(this.state)
 
     return (
       <div >
@@ -108,6 +139,7 @@ export default class Form extends Component {
               </label>
             </div>
           </div>
+          <a className="button uk-button uk-button-secondary" href="http://localhost:3001/yelpSearch?location=' + '{this.state.location}' + '&term=' + '{this.state.food ? this.state.food : this.state.bar}' + '&limit=100" >Search Yelp!</a>
           <button className="uk-margin-large-bottom button uk-button uk-button-secondary" type="submit">Call a Lyft!</button>
         </form>
       </div>

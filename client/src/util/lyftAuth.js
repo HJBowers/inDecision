@@ -1,24 +1,24 @@
 import {accessToken, authCode, state} from './queryParams'
-const client_id = process.env.CONFIG_LYFT_CLIENT_ID || '_c1acZZEx7zF'
-const client_secret = process.env.CONFIG_LYFT_CLIENT_SECRET || 'OudKwZhqGGCCTkc5IRTiDvwqUxkmef_0'
-// const client_token = process.env.CONFIG_LYFT_CLIENT_TOKEN || null
+import {client_id} from './config'
+import {client_secret} from './config'
+
 const stateString = "true"
 
-export function accessLyftAccount() {
-  const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
-  const myInit = {
-    method: 'GET',
-    mode: 'cors',
-    headers: {"Access-Control-Allow-Origin": "*"},
-    // credentials: 'include',
-    // cache: 'default',
-    redirect: 'follow'
-  }
-
-  return fetch(url, myInit)
-  .then( response => console.log(response) )
-  .catch(err => console.error(err))
-}
+// export function accessLyftAccount() {
+//   const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
+//   const myInit = {
+//     method: 'GET',
+//     mode: 'cors',
+//     headers: {"Access-Control-Allow-Origin": "*"},
+//     // credentials: 'include',
+//     // cache: 'default',
+//     redirect: 'follow'
+//   }
+//
+//   return fetch(url, myInit)
+//   .then( response => console.log(response) )
+//   .catch(err => console.error(err))
+// }
 
 
 
@@ -71,7 +71,7 @@ export function useAccessToken() {
     body: JSON.stringify({
       "grant_type": "client_credentials",
       "ride_type" : "lyft",
-      // grab origin via
+      // parse origin via user gps location
       "origin" : {"lat" : 37.77663, "lng" : -122.39227 },
       "destination" : {
         "lat" : 37.771,

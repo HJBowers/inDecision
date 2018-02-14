@@ -1,4 +1,3 @@
-require('dotenv').config()
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
@@ -8,6 +7,8 @@ const path = require('path')
 const cors = require('cors')
 const https = require('https')
 const http = require('http')
+const fetch = require('node-fetch')
+require('dotenv').config()
 
 const app = express()
 
@@ -42,29 +43,55 @@ app.use(passport.session())
 
 //
 //
-app.get('/accessLyftAccount', function(req, res) {
-  console.log("Inside accessLyftAccount route")
 
-  const client_id = process.env.CONFIG_LYFT_CLIENT_ID || '_c1acZZEx7zF'
-  const stateString = "true"
-  const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
+app.get('/yelpSearch', (req, res) => {
+  const yelp_api_key = process.env.CONFIG_YELP_API_KEY
+  const params = req.params
+  console.log("params", params)
 
-// 'https://api.lyft.com/oauth/authorize?client_id=_c1acZZEx7zF&scope=public%20profile%20rides.read%20rides.request%20offline&state=true&response_type=code'
-// https://www.lyft.com/oauth/authorize?response_type=code&redirect_uri=http:%2F%2Flocalhost:3001%2Fcallback&scope=public%20profile%20rides.read%20rides.request&state=OFO0zzqy2w32Ok4NBqs35siq&client_id=_c1acZZEx7zF
+  const url = `https://api.yelp.com/v3/businesses/search?location=94611&limit=2`
+  const myInit = {
+    method: 'GET',
+    headers: {
+      "Authorization": `Bearer ${yelp_api_key}`,
+    }
+  }
 
-  https.get(url, (res) => {
-    console.log('statusCode:', res.statusCode);
-    console.log('headers:', res.headers);
-
-    res.on('data', (d) => {
-      process.stdout.write(d);
-    });
-
+  return fetch(url, myInit)
+  .then(resp => {
+    console.log(resp)
+    return resp.json()
   })
-  .on('error', (e) => {
-    console.error(e);
+  .then(response => {
+    console.log(response)
+    res.send(response)
   })
+  .catch(err => console.error(err))
 })
+
+
+
+// app.get('/accessLyftAccount', function(req, res) {
+//   const client_id = process.env.CONFIG_LYFT_CLIENT_ID
+//   const stateString = "true"
+//   const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
+//
+// // 'https://api.lyft.com/oauth/authorize?client_id=_c1acZZEx7zF&scope=public%20profile%20rides.read%20rides.request%20offline&state=true&response_type=code'
+// // https://www.lyft.com/oauth/authorize?response_type=code&redirect_uri=http:%2F%2Flocalhost:3001%2Fcallback&scope=public%20profile%20rides.read%20rides.request&state=OFO0zzqy2w32Ok4NBqs35siq&client_id=_c1acZZEx7zF
+//
+//   https.get(url, (res) => {
+//     console.log('statusCode:\n', res.statusCode);
+//     console.log('headers:\n', res.headers);
+//
+//     res.on('data', (d) => {
+//       process.stdout.write(d);
+//     });
+//
+//   })
+//   .on('error', (e) => {
+//     console.error(e);
+//   })
+// })
 
 // Lyft-node-oauth
 app.get('/auth/lyft',
