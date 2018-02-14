@@ -1,9 +1,16 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
-import Form from '../components/Form';
-import '../App.css';
+import React, { Component } from 'react'
+import logo from '../logo.svg'
+import Form from '../components/Form'
+import { retrieveAccessToken } from '../util/lyftAuth'
+
+import '../App.css'
 
 class Home extends Component {
+
+componentDidMount(){
+  retrieveAccessToken()
+}
+
   render() {
     return (
       <div className="App">
@@ -15,8 +22,8 @@ class Home extends Component {
           <Form />
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Home;
+export default Home
