@@ -61,34 +61,37 @@ function setToken(token, callback) {
 
 
 export function useAccessToken() {
-  // const url = 'https://api.lyft.com/v1/rides'
-  // const accessToken = window.localStorage.getItem("accessToken")
-  //
-  // const myInit = {
-  //   method: 'POST',
-  //   mode: 'cors',
-  //   cache: 'default',
-  //   body: JSON.stringify({
-  //     "grant_type": "client_credentials",
-  //     "ride_type" : "lyft",
-  //     // parse origin via user gps location
-  //     "origin" : {"lat" : 37.77663, "lng" : -122.39227 },
-  //     "destination" : {
-  //       "lat" : 37.771,
-  //       "lng" : -122.39123,
-  //       "address" : "Mission Bay Boulevard North"
-  //     }
-  //   }),
-  //   headers: {
-  //     "Authorization": `Bearer ${accessToken}`,
-  //     "Content-Type": "application/json;charset=UTF-8",
-  //   }
-  // }
-  //
-  // return fetch(url, myInit)
-  // .then(response => response.json())
-  // .then(res => console.log(res))
-  // .catch(err => console.error('ERROR :: =>', err))
+  const url = 'https://api.lyft.com/v1/rides'
+  const accessToken = window.localStorage.getItem("accessToken")
+  const lat = localStorage.getItem("latitude")
+  const lng = localStorage.getItem("longitude")
+  const destination = localStorage.getItem("destination")
+
+  const myInit = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'default',
+    body: JSON.stringify({
+      "grant_type": "client_credentials",
+      "ride_type" : "lyft",
+      // parse origin via user gps location
+      "origin" : {"lat" : lat, "lng" : lng },
+      "destination" : {
+        // "lat" : 37.771,
+        // "lng" : -122.39123,
+        "address" : destination
+      }
+    }),
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/json;charset=UTF-8",
+    }
+  }
+
+  return fetch(url, myInit)
+  .then(response => response.json())
+  .then(res => console.log(res))
+  .catch(err => console.error('ERROR :: =>', err))
 }
 
 

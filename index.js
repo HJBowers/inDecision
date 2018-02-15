@@ -32,7 +32,7 @@ app.post('/yelpSearch', (req, res) => {
   const yelp_api_key = process.env.CONFIG_YELP_API_KEY
   const { latitude, longitude, term, distance, price } = req.body
   const limit = 10
-  const sort_by = 'best_match'
+  const sort_by = 'rating'
   const open_now = true
   const radius = distance * 1609
 

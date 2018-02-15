@@ -34,7 +34,7 @@ export default class Form extends Component {
     event.preventDefault()
     const url = "http://localhost:3001/yelpSearch"
     const { latitude, longitude, food, drinks, rating, price, distance } = this.state
-    let term = food ? (drinks ? "restuarant,bar": "restuarant") : (drinks ? "bar" : "restuarant,bar")
+    let term = food ? (drinks ? "restaurants,drinks": "restaurants") : (drinks ? "drinks" : "restaurants,drinks")
     localStorage.setItem("userRating", rating)
 
     axios.post(url, { latitude, longitude, term, price, distance })
@@ -42,11 +42,14 @@ export default class Form extends Component {
       if(yelpResults.data.businesses.length === 0) {
         alert("Sorry, there are no destinations that meet your criteria.\nTry expanding your horizons by expanding your search radius. ;)")
       } else {
-        console.log("Selected businesses::: ", yelpResults.data.businesses.map(business => business.name))
+        // console.log("Selected businesses::: ", yelpResults.data.businesses.map(business => business.name))
         return selectFromYelpResults(yelpResults.data.businesses)
       }
     })
-    .then( )
+    .then(destination => {
+      localStorage.setItem("destination", destination.location)
+      console.log(destination.name, destination.location)
+    })
   }
 
   handleSliderChange(value) {
