@@ -27,6 +27,34 @@ app.use(session(
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Yelp API
+app.post('/yelpSearch', (req, res) => {
+  const yelp_api_key = process.env.CONFIG_YELP_API_KEY
+  const { latitude, longitude, term, distance, price } = req.body
+  const limit = 10
+  const sort_by = 'best_match'
+  const open_now = true
+  const radius = distance * 1609
+
+  const url = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}&price=${price}&limit=${limit}&sort_by=${sort_by}&open_now=${open_now}&radius=${radius}`
+  const myInit = {
+    method: 'GET',
+    headers: {
+      "Authorization": `Bearer ${yelp_api_key}`,
+    }
+  }
+
+  return fetch(url, myInit)
+  .then(yelpResults => {
+    return yelpResults.json()
+  })
+  .then(businesses => {
+    console.log(businesses)
+    res.send(businesses)
+  })
+  .catch(err => console.error(err))
+})
+
 // function accessLyftAccount() {
 //   const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
 //   const myInit = {
@@ -40,36 +68,6 @@ app.use(passport.session())
 //   .then( response => console.log(response) )
 //   .catch(err => console.error(err))
 // }
-
-//
-//
-
-app.get('/yelpSearch', (req, res) => {
-  const yelp_api_key = process.env.CONFIG_YELP_API_KEY
-  const params = req.params
-  console.log("params", params)
-
-  const url = `https://api.yelp.com/v3/businesses/search?location=94611&limit=2`
-  const myInit = {
-    method: 'GET',
-    headers: {
-      "Authorization": `Bearer ${yelp_api_key}`,
-    }
-  }
-
-  return fetch(url, myInit)
-  .then(resp => {
-    console.log(resp)
-    return resp.json()
-  })
-  .then(response => {
-    console.log(response)
-    res.send(response)
-  })
-  .catch(err => console.error(err))
-})
-
-
 
 // app.get('/accessLyftAccount', function(req, res) {
 //   const client_id = process.env.CONFIG_LYFT_CLIENT_ID

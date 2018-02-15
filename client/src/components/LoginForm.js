@@ -13,6 +13,30 @@ export default class LoginForm extends Component {
     }
   }
 
+  componentDidMount(){
+    this.geoFindMe()
+  }
+
+  // Pull out into it's own component
+  geoFindMe() {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser. Use Chrome, silly")
+    }
+
+    const success = (position) => {
+      const latitude  = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      localStorage.setItem("latitude", latitude)
+      localStorage.setItem("longitude", longitude)
+    }
+
+    const error = () => {
+      console.log( "Error!" )
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error)
+  }
+
   handleEmailChange(event) {
     this.setState({emailValue: event.target.value})
   }
@@ -33,10 +57,10 @@ export default class LoginForm extends Component {
 
 
   render() {
-    const client_id = process.env.CONFIG_LYFT_CLIENT_ID || '_c1acZZEx7zF'
-    console.log(client_id, "   ", process.env.CONFIG_LYFT_CLIENT_ID)
-    const stateString = ""
-    const url = `https://api.lyft.com/oauth/authorize?${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
+    // const client_id = process.env.CONFIG_LYFT_CLIENT_ID || '_c1acZZEx7zF'
+    // console.log(client_id, "   ", process.env.CONFIG_LYFT_CLIENT_ID)
+    // const stateString = ""
+    // const url = `https://api.lyft.com/oauth/authorize?${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
 
     // <button className="button uk-button uk-button-secondary" type="submit">Search Yelp!</button>
 
@@ -45,13 +69,13 @@ export default class LoginForm extends Component {
     // <form onSubmit={this.handleFormSubmit.bind(this)} >
     //   <a className="button uk-button uk-button-secondary" href="http://localhost:3001/yelpSearch?location=94611&term=bar&limit=1">Yelp!</a>
     // </form>
+    // <a className="button uk-button uk-button-secondary" href="http://localhost:3001/accessLyftAccount">Login via /accessLyftAccount</a>
+    // <br/>
+    // <a className="button uk-button uk-button-secondary" href={url}>Login via direct URL</a>
+    // <br/>
 
     return (
       <div>
-        <a className="button uk-button uk-button-secondary" href="http://localhost:3001/accessLyftAccount">Login via /accessLyftAccount</a>
-        <br/>
-        <a className="button uk-button uk-button-secondary" href={url}>Login via direct URL</a>
-        <br/>
         <a className="button uk-button uk-button-secondary" href="http://localhost:3001/auth/lyft">Login via passport-lyft</a>
       </div>
     )
