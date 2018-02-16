@@ -3,7 +3,8 @@ import StarRatingComponent from 'react-star-rating-component'
 import Slider from 'react-rangeslider'
 import Button from '../components/Button'
 import axios from 'axios'
-import {selectFromYelpResults} from '../util/selectFromYelpResults'
+import {filterBusinessesAndReturnOne} from '../util/filterBusinessesAndReturnOne'
+import {useAccessToken} from '../util/lyftAuth'
 import '../App.css'
 
 export default class Form extends Component {
@@ -11,8 +12,8 @@ export default class Form extends Component {
     super(props, context)
 
     this.state = {
-      latitude: localStorage.getItem("latitude"),
-      longitude: localStorage.getItem("longitude"),
+      latitude: localStorage.getItem("originLat"),
+      longitude: localStorage.getItem("originLng"),
       food: false,
       drinks: false,
       rating: 3,
@@ -20,7 +21,6 @@ export default class Form extends Component {
       distance: 1
     }
   }
-
 
   handleOptionChange(event) {
     const target = event.target
@@ -32,6 +32,7 @@ export default class Form extends Component {
 
   handleFormSubmit(event) {
     event.preventDefault()
+    let destinationName, destinationLocation
     const url = "http://localhost:3001/yelpSearch"
     const { latitude, longitude, food, drinks, rating, price, distance } = this.state
     let term = food ? (drinks ? "restaurants,drinks": "restaurants") : (drinks ? "drinks" : "restaurants,drinks")
@@ -40,16 +41,24 @@ export default class Form extends Component {
     axios.post(url, { latitude, longitude, term, price, distance })
     .then((yelpResults) => {
       if(yelpResults.data.businesses.length === 0) {
-        alert("Sorry, there are no destinations that meet your criteria.\nTry expanding your horizons by expanding your search radius. ;)")
+        alert( "Sorry, there are no destinations that meet your criteria.\nTry expanding your horizons by expanding your search radius. )" )
       } else {
-        // console.log("Selected businesses::: ", yelpResults.data.businesses.map(business => business.name))
-        return selectFromYelpResults(yelpResults.data.businesses)
+        return filterBusinessesAndReturnOne(yelpResults.data.businesses)
       }
     })
-    .then(destination => {
-      localStorage.setItem("destination", destination.location)
-      console.log(destination.name, destination.location)
+    .then(destinationObj => {
+      console.log("destinationObj::::    \n", destinationObj)
+      destinationName = destinationObj.name
+      destinationLocation = destinationObj.location
+      return useAccessToken(destinationObj.destinationLatitude, destinationObj.destinationLongitude)
     })
+    .then(lyftRideRequest => {
+      console.log("Lyft Ride Request Object::::    \n", lyftRideRequest)
+      console.log("destination::::    \n", destinationName, destinationLocation)
+      alert(`You're heading to ${destinationName}, located at ${destinationLocation}. \nYour Lyft is on it's way!`)
+    })
+    .then(success => console.log("Successful!"))
+    .catch(err => console.error(err))
   }
 
   handleSliderChange(value) {

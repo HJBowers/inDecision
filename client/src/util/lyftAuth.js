@@ -1,6 +1,6 @@
-import {accessToken, authCode, state} from './queryParams'
-import {client_id} from './config'
-import {client_secret} from './config'
+import { authCode, authState} from './queryParams'
+import { client_id } from './config'
+import { client_secret } from './config'
 
 const stateString = "true"
 
@@ -21,20 +21,12 @@ const stateString = "true"
 // }
 
 
-
-// Remove sandbox when ready for production
 export function retrieveAccessToken() {
+  const check_env = process.env.NODE_ENV === 'development' ? 'SANDBOX-'  : ''
   const url = 'https://api.lyft.com/oauth/token'
-
-  const check_env = process.env.NODE_ENV === 'development'
-    ? 'SANDBOX-'
-    : ''
-
-    // console.log('check_env :: ==>', check_env)
-
   const myInit = {
     method: "POST",
-    state: `${state}`,
+    state: `${authState}`,
     body: JSON.stringify({
       "grant_type": "authorization_code",
       "code": `${authCode}`
@@ -48,23 +40,24 @@ export function retrieveAccessToken() {
   return fetch(url, myInit)
   .then(response => response.json())
   .then(response => {
-    setToken(response.access_token, () => useAccessToken())
+    // bypasses async so that accessToken is set before it's used
+    // (so accessToken doesn't get used immediately --incase of page refresh)
+    window.localStorage.setItem("accessToken", response.access_token)
+    // setToken(response.access_token, () => useAccessToken())
   })
   .catch(err => console.error(err))
 }
 
+// function setToken(token, callback) {
+//   window.localStorage.setItem("accessToken", token)
+//   callback()
+// }
 
-function setToken(token, callback) {
-  window.localStorage.setItem("accessToken", token)
-  callback()
-}
-
-
-export function useAccessToken() {
+export function useAccessToken(destinationLatitude, destinationLongitude) {
   const url = 'https://api.lyft.com/v1/rides'
   const accessToken = window.localStorage.getItem("accessToken")
-  const lat = localStorage.getItem("latitude")
-  const lng = localStorage.getItem("longitude")
+  const originLat = localStorage.getItem("originLat")
+  const originLng = localStorage.getItem("originLng")
   const destination = localStorage.getItem("destination")
 
   const myInit = {
@@ -74,11 +67,10 @@ export function useAccessToken() {
     body: JSON.stringify({
       "grant_type": "client_credentials",
       "ride_type" : "lyft",
-      // parse origin via user gps location
-      "origin" : {"lat" : lat, "lng" : lng },
+      "origin": {"lat": originLat, "lng": originLng },
       "destination" : {
-        // "lat" : 37.771,
-        // "lng" : -122.39123,
+        "lat" : destinationLatitude,
+        "lng" : destinationLongitude,
         "address" : destination
       }
     }),
@@ -90,15 +82,6 @@ export function useAccessToken() {
 
   return fetch(url, myInit)
   .then(response => response.json())
-  .then(res => console.log(res))
+  .then(rideRequested => rideRequested)
   .catch(err => console.error('ERROR :: =>', err))
 }
-
-
-// export function getLyftToken() {
-//   accessLyftAccount
-//   retrieveAccessToken
-//   useAccessToken
-// }
-
-// export default getLyftToken;

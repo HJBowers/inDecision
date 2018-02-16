@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { yelpSearch } from '../util/yelpAuth'
+// import { yelpSearch } from '../util/yelpAuth'
 import '../App.css'
 
 
@@ -24,14 +24,14 @@ export default class LoginForm extends Component {
     }
 
     const success = (position) => {
-      const latitude  = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      localStorage.setItem("latitude", latitude)
-      localStorage.setItem("longitude", longitude)
+      // const latitude  = position.coords.latitude;
+      // const longitude = position.coords.longitude;
+      localStorage.setItem("originLat", position.coords.latitude)
+      localStorage.setItem("originLng", position.coords.longitude)
     }
 
     const error = () => {
-      console.log( "Error!" )
+      console.log( "Error finding origin coordinates!" )
     }
 
     navigator.geolocation.getCurrentPosition(success, error)

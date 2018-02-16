@@ -36,7 +36,7 @@ app.post('/yelpSearch', (req, res) => {
   const open_now = true
   const radius = distance * 1609
 
-  const url = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}&price=${price}&limit=${limit}&sort_by=${sort_by}&open_now=${open_now}&radius=${radius}`
+  const url = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${term}&price=${price}&limit=${limit}&sort_by=${sort_by}&open_now=${open_now}&radius=${radius}`
   const myInit = {
     method: 'GET',
     headers: {
@@ -45,13 +45,8 @@ app.post('/yelpSearch', (req, res) => {
   }
 
   return fetch(url, myInit)
-  .then(yelpResults => {
-    return yelpResults.json()
-  })
-  .then(businesses => {
-    console.log(businesses)
-    res.send(businesses)
-  })
+  .then(yelpResults => yelpResults.json())
+  .then(yelpResultsObj => res.send(JSON.stringify(yelpResultsObj)))
   .catch(err => console.error(err))
 })
 
