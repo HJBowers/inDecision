@@ -47,7 +47,6 @@ export default class Form extends Component {
       }
     })
     .then(destinationObj => {
-      console.log("destinationObj::::    \n", destinationObj)
       destinationName = destinationObj.name
       destinationLocation = destinationObj.location
       return useAccessToken(destinationObj.destinationLatitude, destinationObj.destinationLongitude)

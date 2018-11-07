@@ -24,8 +24,6 @@ export default class LoginForm extends Component {
     }
 
     const success = (position) => {
-      // const latitude  = position.coords.latitude;
-      // const longitude = position.coords.longitude;
       localStorage.setItem("originLat", position.coords.latitude)
       localStorage.setItem("originLng", position.coords.longitude)
     }

@@ -23,7 +23,6 @@ passport.use(new lyftStrategy(
 ))
 
 passport.serializeUser(function(user, done) {
-  console.log("****************** serializeUser user ******************\n", user, "\n**************************************************")
   done(null, user.id)
 })
 

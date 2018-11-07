@@ -11,6 +11,7 @@ export default class Button extends Component {
   }
 
   handleClick() {
+    // Make into ternary
     if(this.state.bgColor === '#222') {
       this.setState({
         bgColor: '#FF95C7'

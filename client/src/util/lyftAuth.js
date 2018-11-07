@@ -4,6 +4,7 @@ import { client_secret } from './config'
 
 const stateString = "true"
 
+// // Manually signing in to Lyft, This has been replaced with passport
 // export function accessLyftAccount() {
 //   const url = `https://api.lyft.com/oauth/authorize?client_id=${client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=${stateString}&response_type=code`
 //   const myInit = {
