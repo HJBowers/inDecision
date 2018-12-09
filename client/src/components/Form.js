@@ -18,9 +18,10 @@ export default class Form extends Component {
       drinks: false,
       rating: 3,
       price: 2,
-      distance: 1
+      distance: 1,
     }
   }
+
 
   handleOptionChange(event) {
     const target = event.target
@@ -51,18 +52,24 @@ export default class Form extends Component {
       destinationLocation = destinationObj.location
       return useAccessToken(destinationObj.destinationLatitude, destinationObj.destinationLongitude)
     })
-    .then(lyftRideRequest => {
-      console.log("Lyft Ride Request Object::::    \n", lyftRideRequest)
-      console.log("destination::::    \n", destinationName, destinationLocation)
-      alert(`You're heading to ${destinationName}, located at ${destinationLocation}. \nYour Lyft is on it's way!`)
+    .then(lyftRideRequestResponseObj => {
+        console.log("Lyft Ride Request Object::::    \n", lyftRideRequestResponseObj)
+        // console.log("destination::::    \n", destinationName, destinationLocation)
+        console.log("Successful!")
+        alert(`You're heading to ${destinationName}, located at ${destinationLocation}. \nYour Lyft is on it's way!`)
     })
-    .then(success => console.log("Successful!"))
-    .catch(err => console.error(err))
+    .then(() => {
+      window.location.href="/decide";
+    })
+    .catch(err =>
+        console.error("Error : ", err)
+    )
   }
 
   handleSliderChange(value) {
     this.setState({distance: value})
   }
+
 
   // onStarClick(value) {
   //   this.setState({rating: value})
@@ -86,7 +93,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const { rating, price, distance, food, drinks, latitude, longitude } = this.state
+    const { /* rating, latitude, longitude, */ price, distance, food, drinks } = this.state
 
     return (
       <div >
@@ -140,7 +147,7 @@ export default class Form extends Component {
               </label>
             </div>
           </div>
-          <button className="uk-margin-large-bottom button uk-button uk-button-secondary" type="submit">Call a Lyft!</button>
+          <button className="uk-margin-large-bottom button uk-button uk-button-secondary" type="submit"  >Call a Lyft!</button>
         </form>
       </div>
     )

@@ -2,7 +2,7 @@ import { authCode, authState} from './queryParams'
 import { client_id } from './config'
 import { client_secret } from './config'
 
-const stateString = "true"
+// const stateString = "true"
 
 // // Manually signing in to Lyft, This has been replaced with passport
 // export function accessLyftAccount() {

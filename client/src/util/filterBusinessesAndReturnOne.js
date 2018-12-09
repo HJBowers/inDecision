@@ -4,9 +4,9 @@ export function filterBusinessesAndReturnOne(businesses) {
   const name = selectedBusiness.name
   const destinationLatitude = selectedBusiness.coordinates.latitude
   const destinationLongitude = selectedBusiness.coordinates.longitude
-  const yelpRating = selectedBusiness.rating
-  const price = selectedBusiness.price
-  const categories = selectedBusiness.categories
+  // const yelpRating = selectedBusiness.rating
+  // const price = selectedBusiness.price
+  // const categories = selectedBusiness.categories
   const location = selectedBusiness.location.display_address.join(", ")
 
   // console.log("All filtered Businesses:::\n", filteredBusinesses.map( business => business.name) )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Form from '../components/Form'
 import logo from '../Lyft.png';
 import '../App.css';
 
